@@ -1,7 +1,7 @@
-const Button = ({ children = "...", variant = "bg-black" }) => {
+const Button = ({ children = "...", classname = "bg-black" }) => {
   return (
     <button
-      className={`h-10 px-6 font-semibold rounded-md ${variant} text-white`}
+      className={`h-10 px-6 font-semibold rounded-md ${classname} text-white`}
       type="submit"
     >
       {children}

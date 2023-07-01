@@ -1,14 +1,15 @@
-import Button from "./components/Elements/button";
+import { Route, Routes } from "react-router-dom";
+import LoginPage from "./pages/login";
+import RegisterPage from "./pages/register";
+import ErrorPage from "./pages/404";
 
 function App() {
   return (
-    <div className="flex justify-center bg-blue-600 min-h-screen items-center">
-      <div className="flex gap-x-3">
-        <Button variant="bg-green-600">Login</Button>
-        <Button variant="bg-slate-600">Register</Button>
-        <Button></Button>
-      </div>
-    </div>
+    <Routes>
+      <Route path="*" element={<ErrorPage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/register" element={<RegisterPage />} />
+    </Routes>
   );
 }
 
