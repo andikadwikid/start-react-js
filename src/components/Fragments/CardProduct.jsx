@@ -2,7 +2,7 @@ import Button from "../Elements/button";
 
 const CardProduct = ({ children }) => {
   return (
-    <div className="w-full max-w-sm bg-gray-800 border border-gray-700 rounded-lg shadow mx-2">
+    <div className="w-full max-w-sm bg-gray-800 border border-gray-700 rounded-lg shadow mx-2 flex flex-col justify-between">
       {children}
     </div>
   );
@@ -15,12 +15,12 @@ const Header = ({ image }) => {
     </a>
   );
 };
-const Body = ({ children, title }) => {
+const Body = ({ children, name }) => {
   return (
-    <div className="px-5 pb-5">
+    <div className="px-5 pb-5 h-full">
       <a href="">
-        <h5 className="text-xl font-semibold tracking-tight text-white">
-          {title}
+        <h5 className="text-xl font-semibold tracking-tight text-white mb-3">
+          {name}
         </h5>
         <p className="text-m text-white">{children}</p>
       </a>
