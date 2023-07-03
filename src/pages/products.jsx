@@ -10,12 +10,14 @@ const products = [
     aut! Error nisi asperiores harum, magnam illo repellat, consectetur
     enim reprehenderit minus culpa sequi odio dolores. Quas consectetur
     cupiditate perferendis.`,
+    price: "Rp. 7.000.000",
   },
   {
     id: 2,
     image: "images/product1.jpg",
     name: "Smartphone 2",
     description: `Lorem ipsum dolor, sit amet consectetur adipisicing elit. Optio, fugit aut!`,
+    price: "Rp. 7.000.000",
   },
 ];
 const ProductsPage = () => {
