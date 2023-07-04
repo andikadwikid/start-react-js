@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Button from "../components/Elements/button";
 import CardProduct from "../components/Fragments/CardProduct";
 
@@ -10,24 +11,49 @@ const products = [
     aut! Error nisi asperiores harum, magnam illo repellat, consectetur
     enim reprehenderit minus culpa sequi odio dolores. Quas consectetur
     cupiditate perferendis.`,
-    price: "Rp. 7.000.000",
+    price: 7000000,
   },
   {
     id: 2,
     image: "images/product1.jpg",
     name: "Smartphone 2",
     description: `Lorem ipsum dolor, sit amet consectetur adipisicing elit. Optio, fugit aut!`,
-    price: "Rp. 7.000.000",
+    price: 7000000,
+  },
+  {
+    id: 3,
+    image: "images/product1.jpg",
+    name: "Smartphone 3",
+    description: `Lorem ipsum dolor, sit amet consectetur adipisicing elit. Optio, fugit aut!`,
+    price: 7000000,
   },
 ];
 
 const email = localStorage.getItem("email");
 const ProductsPage = () => {
+  const [cart, setCart] = useState([]);
+
   const handleLogout = () => {
     localStorage.removeItem("email");
     localStorage.removeItem("password");
 
     window.location.href = "/login";
+  };
+
+  const handleAddToCart = (id) => {
+    // check if item already in cart
+    const checkCart = cart.find((item) => item.id === id);
+    if (checkCart) {
+      // update qty
+      setCart(
+        cart.map((item) =>
+          item.id === id ? { ...item, qty: item.qty + 1 } : item
+        )
+      );
+    } else {
+      // add to cart
+      setCart([...cart, { id, qty: 1 }]);
+    }
   };
   return (
     <>
@@ -38,17 +64,68 @@ const ProductsPage = () => {
         </Button>
       </div>
       <div className="flex justify-center py-5">
-        {products.map((product) => {
-          return (
-            <CardProduct key={product.id}>
-              <CardProduct.Header image={product.image} />
-              <CardProduct.Body name={product.name}>
-                {product.description}
-              </CardProduct.Body>
-              <CardProduct.Footer price={product.price} />
-            </CardProduct>
-          );
-        })}
+        <div className="w-4/6 flex flex-wrap">
+          {products.map((product) => {
+            return (
+              <CardProduct key={product.id}>
+                <CardProduct.Header image={product.image} />
+                <CardProduct.Body name={product.name}>
+                  {product.description}
+                </CardProduct.Body>
+                <CardProduct.Footer
+                  price={product.price}
+                  id={product.id}
+                  handleAddToCart={handleAddToCart}
+                />
+              </CardProduct>
+            );
+          })}
+        </div>
+        <div className="w-2/4">
+          <h1 className="text-3xl font-bold text-blue-600 ml-5 mb-2">Cart</h1>
+
+          <table className="text-left table-auto border-separate border-spacing-x-5">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {cart.map((item) => {
+                // find product
+                const product = products.find(
+                  (product) => product.id === item.id
+                );
+
+                return (
+                  <tr key={item.id}>
+                    <td>{product.name}</td>
+                    <td>
+                      {product.price.toLocaleString("id-ID", {
+                        style: "currency",
+                        currency: "IDR",
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 2,
+                      })}
+                    </td>
+                    <td>{item.qty}</td>
+                    <td>
+                      {(product.price * item.qty).toLocaleString("id-ID", {
+                        style: "currency",
+                        currency: "IDR",
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 2,
+                      })}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     </>
   );
