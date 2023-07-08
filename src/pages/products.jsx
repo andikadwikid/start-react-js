@@ -2,39 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import Button from "../components/Elements/button";
 import CardProduct from "../components/Fragments/CardProduct";
 import getPoducts from "../services/product.service";
+import { getUsername } from "../services/auth.service";
 
-// const products = [
-//   {
-//     id: 1,
-//     image: "images/product1.jpg",
-//     name: "Smartphone 1",
-//     description: `Lorem ipsum dolor, sit amet consectetur adipisicing elit. Optio, fugit
-//     aut! Error nisi asperiores harum, magnam illo repellat, consectetur
-//     enim reprehenderit minus culpa sequi odio dolores. Quas consectetur
-//     cupiditate perferendis.`,
-//     price: 7000000,
-//   },
-//   {
-//     id: 2,
-//     image: "images/product1.jpg",
-//     name: "Smartphone 2",
-//     description: `Lorem ipsum dolor, sit amet consectetur adipisicing elit. Optio, fugit aut!`,
-//     price: 7000000,
-//   },
-//   {
-//     id: 3,
-//     image: "images/product1.jpg",
-//     name: "Smartphone 3",
-//     description: `Lorem ipsum dolor, sit amet consectetur adipisicing elit. Optio, fugit aut!`,
-//     price: 7000000,
-//   },
-// ];
-
-const email = localStorage.getItem("email");
 const ProductsPage = () => {
   const [cart, setCart] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [products, setProducts] = useState([]);
+  const [username, setUsername] = useState("");
 
   useEffect(() => {
     getPoducts().then((data) => {
@@ -44,6 +18,13 @@ const ProductsPage = () => {
 
   useEffect(() => {
     setCart(JSON.parse(localStorage.getItem("cart")) || []);
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      setUsername(getUsername(token));
+    } else {
+      window.location.href = "/login";
+    }
   }, []);
 
   useEffect(() => {
@@ -58,8 +39,7 @@ const ProductsPage = () => {
   }, [cart, products]);
 
   const handleLogout = () => {
-    localStorage.removeItem("email");
-    localStorage.removeItem("password");
+    localStorage.removeItem("token");
 
     window.location.href = "/login";
   };
@@ -101,7 +81,7 @@ const ProductsPage = () => {
   return (
     <>
       <div className="flex justify-end bg-blue-600 h-20 text-white items-center px-10">
-        {email}
+        {username}
         <Button classname="ml-5 bg-black" onClick={handleLogout}>
           Logout
         </Button>
