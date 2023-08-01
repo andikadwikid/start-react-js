@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import Button from "../components/Elements/button";
 import CardProduct from "../components/Fragments/CardProduct";
-import getPoducts from "../services/product.service";
+import { getPoducts } from "../services/product.service";
 import { getUsername } from "../services/auth.service";
 import useLogin from "../hooks/useLogin";
 
@@ -87,7 +87,7 @@ const ProductsPage = () => {
             products.map((product) => {
               return (
                 <CardProduct key={product.id}>
-                  <CardProduct.Header image={product.image} />
+                  <CardProduct.Header image={product.image} id={product.id} />
                   <CardProduct.Body name={product.title}>
                     {product.description}
                   </CardProduct.Body>
