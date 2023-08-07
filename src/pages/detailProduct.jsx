@@ -14,7 +14,14 @@ const DetailProductPage = () => {
   }, [id]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <>
+        <div className="w-100 min-h-screen flex justify-center items-center">
+          <div className="flex font-sans max-w-xl mt-4"></div>
+          <div>Loading...</div>
+        </div>
+      </>
+    );
   }
 
   console.log(product);
